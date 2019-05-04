@@ -18,7 +18,7 @@ router.post('/signup', (req, res, next) => {
 
   if(name ==='' || email === '' || password === '') return res.render('auth/signup', 
   {
-    err: 'Tu nombre, tu email o tu password no pueden estar vacios. 😞', 
+    err: 'Tu nombre, tu email o tu password no pueden estar vacios.', 
     title: 'Sign up',
     action: '/signup',
     submit: '¡Registrate!',
@@ -27,16 +27,15 @@ router.post('/signup', (req, res, next) => {
 
   User.register({ ...req.body }, req.body.password)
     .then(user => {
-      res.redirect('/')
-      // passport.authenticate('local', (err, user, info) => {
-      //   if(err) return next(err)
-      //   if(!user) return res.redirect('/login')
-      //   req.logIn(user, err => {
-      //     if(err) return next(err)
-      //     req.app.locals.loggedUser = user
-      //     return res.redirect('/something', { user })
-      //   })
-      // })(req, res, next)
+      passport.authenticate('local', (err, user, info) => {
+        if(err) return next(err)
+        if(!user) return res.redirect('/login')
+        req.logIn(user, err => {
+          if(err) return next(err)
+          req.app.locals.loggedUser = user
+          res.redirect('/')
+        })
+      })(req, res, next)
     })
     .catch(err => next(err))
 })
@@ -55,7 +54,7 @@ router.post('/login', (req, res, next) => {
     if(err) next(err)
     if(!user) return res.render('auth/signup', 
     {
-      err: 'Sorry! No estás autorizado a entrar.',
+      err: 'Los sentimos. No estás autorizado a entrar.',
       title: 'Login', 
       action:'/login', 
       submit: '¡Entra ya!'
