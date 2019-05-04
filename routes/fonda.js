@@ -37,10 +37,13 @@ router.get('/new-menu', isLogged, checkRole('fonda'), (req, res, next) => {
 })
 
 router.post('/new-menu', isLogged, checkRole('fonda'),(req, res , next) => {
-  Fonda.find({ user: req.user._id })
+  const { mainOne , mainTwo, mainThree } = req.body
+  if(!mainOne || !mainTwo || !mainThree) return res.render('fondas/new_menu', {err: 'Debes ingresar todos los platos fuertes de tu menú.'})
+
+  Fonda.findOne({ user: req.user._id })
     .then(fonda => {
-      Menu.create({ ...req.body, fonda: fonda[0]._id })
-        .then(menu => res.redirect('/fonda'))
+      Menu.create({ ...req.body, fonda: fonda._id })
+        .then(() => res.render('fondas/new_menu', { message: '¡Está listo tu menú de hoy!'}))
         .catch(err => next(err))
     })
     .catch(err => next(err))

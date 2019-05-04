@@ -3,6 +3,9 @@
     <div class="row">
       <div class="col s12 offset-m4 m4">
         <h2>Menú para hoy: </h2>
+        {{#if err}}
+          <h5 class="green-orange-text accent-3">{{message}}</h5>
+        {{/if}}
 
         {{#if err}}
         <h5 class="deep-orange-text accent-3">{{err}}</h5>
@@ -25,7 +28,7 @@
           </p>
           
           <p>
-            <wired-button class="color-orange" onclick="document.forms[0].submit()">¡Listo el menú de hoy!</wired-button>
+            <wired-button class="color-orange" onclick="document.forms[0].submit()">¡Agregar!</wired-button>
           </p>
         </form>
       </div>

@@ -10,6 +10,7 @@ const logger       = require('morgan');
 const path         = require('path');
 const passport     = require('./helpers/passport')
 const session      = require('express-session')
+const MongoStore   = require('connect-mongo')(session)
 const { isLogged } = require('./helpers/middlewares')
 // test
 
@@ -27,17 +28,11 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 
 const app = express();
 
-app.use(
-  session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 }
-  })
-)
-
-app.use(passport.initialize())
-app.use(passport.session())
+// cors config
+// app.use(cors({
+//   origin: true,
+//   credentials: true
+// }))
 
 // Middleware Setup
 app.use(logger('dev'));
@@ -59,7 +54,19 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
+// session config
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: true,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }
+  })
+)
 
+// passport config
+app.use(passport.initialize())
+app.use(passport.session())
 
 // default value for title local
 app.locals.title = 'Fondify';

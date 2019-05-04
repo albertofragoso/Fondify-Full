@@ -70,7 +70,9 @@ router.post('/login', (req, res, next) => {
 router.get('/logout', (req, res, next) => {
   req.app.locals.loggedUser = ''
   req.logOut()
-  res.redirect('/')
+  req.session.destroy((err) => {
+    if(!err) res.status(200).clearCookie('connect.sid', {path: '/'}).redirect('/')
+  })
 })
 
 router.get('/profile', isLogged, (req, res, next) => {
