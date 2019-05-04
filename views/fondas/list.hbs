@@ -6,6 +6,11 @@
       </div>
     </div>
     <div class="row">
+      {{#unless menus}}
+      <div class="col s12 m12">
+        <h5 class="deep-orange-text accent-3">Nadie ha preparado hoy {{main}}. 😞</h5>
+      </div>  
+      {{/unless}}
       {{#each menus as |menu|}}
       <div class="col s12 m4">
         <div class="card">
