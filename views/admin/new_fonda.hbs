@@ -6,6 +6,13 @@
     <div class="row">
       <div class="col s12 m12">
         <h1>Agregar fonda</h1>
+        {{#if err}}
+          <h5 class="green-orange-text accent-3">{{message}}</h5>
+        {{/if}}
+
+        {{#if err}}
+        <h5 class="deep-orange-text accent-3">{{err}}</h5>
+        {{/if}}
       </div>
       <div class="col s12 m12">
         <form action="/admin/fonda/new" method="POST" enctype="multipart/form-data">

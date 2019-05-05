@@ -59,6 +59,14 @@
             </form>
           </wired-card>
       </div>
+      <form action="more" method="POST">
+        <p>Aquí puedes añadir más acompañates a tu orden: </p>
+        <wired-input type="text" name="text" placeholder="Cuántos más" onchange="document.getElementById('howManyMore').value = this.value"></wired-input>
+        <input type="hidden" name="howManyMore" id="howManyMore">
+        <input type="hidden" name="order", value={{order._id}}>
+        <wired-button onclick="document.forms[1].submit()" class="yellow">Añadir</wired-button>
+      </form>
+      <br><br>
     </div>
   </div>
 
@@ -73,7 +81,7 @@
       <wired-input type="time" placeholder="A qué hora" name="howMany" onchange="document.getElementById('arrive').value = this.value"></wired-input>
       <input type="hidden" id="arrive" name="arrive">
       <input type="hidden" id="fonda" name="fonda" value={{fonda._id}}>
-      <wired-button class="color-orange" onclick="document.forms[1].submit()">¡Ordenemos!</wired-button>
+      <wired-button class="color-orange" onclick="document.forms[2].submit()">¡Ordenemos!</wired-button>
     </form>
   </div>
 </div>
@@ -90,7 +98,7 @@
 <!--Modal-->
 <div id="modal1" class="modal bottom-sheet">
   <div class="modal-content">
-    <h4>Has ordenado con éxito hoy en esta fonda. Checa tu orden <a href="/user">aquí</a>.</h4>
+    <h4>Has ordenado con éxito hoy en esta fonda. Checa tu pedido <a href="/user">aquí</a>.</h4>
   </div>
 </div>
 <script>

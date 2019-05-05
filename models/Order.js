@@ -10,14 +10,9 @@ const orderSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "MenuUser"
   }],
-  arrive: String,
   fonda: {
     type: Schema.Types.ObjectId,
     ref: "Fonda"
-  },
-  paySelected: {
-    type: String,
-    enum: ['Paypal','Efectivo','TDC']
   },
   howMany: Number,
   arrive: String

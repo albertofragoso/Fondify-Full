@@ -53,7 +53,7 @@ router.post('/new-order', isLogged, (req, res, next) => {
   const { fonda, howMany, arrive } = req.body
   if(!fonda || !howMany || !arrive) return res.redirect(`/fondas/${fonda}`)
   Order.create({ fonda, howMany, arrive, user: req.user._id })
-    .then(order => res.redirect(`/fondas/${fonda}`))
+    .then(() => res.redirect(`/fondas/${fonda}`))
     .catch(err => next(err))
 })
 
@@ -66,6 +66,14 @@ router.post('/reservation', isLogged, (req, res, next) => {
         .then(() => res.redirect(`/fondas/${fonda}`))
         .catch(err => next(err))
     })
+    .catch(err => next(err))
+})
+
+router.post('/more', isLogged, (req, res, next) => {
+  const { howManyMore, order } =  req.body
+  if(!howManyMore || !order) return
+  Order.findByIdAndUpdate(order, { $inc : {'howMany' : howManyMore }}, { new: true })
+    .then(order => res.redirect( `/fondas/${order.fonda}`))
     .catch(err => next(err))
 })
 
