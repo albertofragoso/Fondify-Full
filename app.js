@@ -77,9 +77,11 @@ const index = require('./routes/index');
 const auth = require('./routes/auth')
 const fondas = require('./routes/fonda')
 const user = require('./routes/user')
+const admin = require('./routes/admin')
 
 app.use('/fondas', fondas)
-app.use('/user',isLogged, user)
+app.use('/user', user)
+app.use('/admin', admin)
 app.use('/', auth)
 app.use('/', index);
 
