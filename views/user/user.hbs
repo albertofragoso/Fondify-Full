@@ -2,7 +2,7 @@
   <div class="section">
     <div class="row">
       <div class="col s12 m12">
-        <h3 >¡Bienvenido, {{loggedUser.name}}! 😎</h3>
+        <h3 >¡Bienvenid@, {{loggedUser.name}}! 😎</h3>
         {{#if orders}}
         <h5 class="grey-text">Estas son tus reservaciones de hoy: </h5>
       {{/if}}
@@ -30,7 +30,7 @@
             <form action="/user/remove-menu" method="POST">
               <input type="hidden" name="order" value="{{order._id}}">
               <input type="hidden" name="menu" value="{{menu._id}}">
-              <wired-button class="red accent-4 white-text" onclick="document.forms[{{@index}}].submit()">Eliminar</wired-button>
+              <wired-button class="red accent-3" onclick="document.forms[{{@index}}].submit()">Eliminar</wired-button>
             </form>
             <hr>
             {{/each}}
@@ -39,9 +39,9 @@
             <span class="card-title activator grey-text text-darken-4">{{order.fonda.name}}<i class="material-icons right">more_vert</i></span>
             <p><span class="grey-text">Hora de reservación:</span> {{order.arrive}}</p>
             <br>
-            <wired-button onclick="location.href='/fondas/{{order.fonda._id}}'" class="yellow accent-4 white-text">Editar</wired-button>
+            <wired-button onclick="location.href='/fondas/{{order.fonda._id}}'" class="yellow accent-4">Editar</wired-button>
 
-            <wired-button style="margin-left: 1em;" class="red accent-4 white-text" onclick="location.href='/user/reservation/{{order._id}}/delete'">Eliminar</wired-button>
+            <wired-button style="margin-left: 1em;" class="red accent-3" onclick="location.href='/user/reservation/{{order._id}}/delete'">Eliminar</wired-button>
 
           </div>
         </div>

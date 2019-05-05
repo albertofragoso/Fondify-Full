@@ -1,7 +1,7 @@
 <div class="container">
   <div class="section">
     <div class="row">
-      <div class="col s12 offset-m4 m4">
+      <div class="col s12 m12" style="text-align: center;">
         <h2>Menú para hoy: </h2>
         {{#if message}}
         <h5 class="green-text accent-3">{{message}}</h5>
@@ -10,25 +10,27 @@
         {{#if err}}
         <h5 class="deep-orange-text accent-3">{{err}}</h5>
         {{/if}}
-
-        <form action="/fondas/new-menu" method="POST">
+      </div>
+      <div class="col s12 offset-m4 m4">
+        <form action="{{action}}" method="POST">
           <p>
-            <wired-input type="text" name="mainOne" placeholder="1er plato fuerte" onchange="document.getElementById('mainOne').value = this.value"></wired-input>
-            <input type="hidden" id="mainOne" name="mainOne">
+            <wired-input type="text" name="mainOne" placeholder="1er plato fuerte" onchange="document.getElementById('mainOne').value = this.value" value="{{menu.mainOne}}"></wired-input>
+            <input type="hidden" id="mainOne" name="mainOne" value="{{menu.mainOne}}" />
           </p>
 
           <p>
-            <wired-input type="text" name="mainTwo" placeholder="2do plato fuerte" onchange="document.getElementById('mainTwo').value = this.value"></wired-input>
-            <input type="hidden" id="mainTwo" name="mainTwo">
+            <wired-input type="text" name="mainTwo" placeholder="2do plato fuerte" onchange="document.getElementById('mainTwo').value = this.value" value="{{menu.mainTwo}}"></wired-input>
+            <input type="hidden" id="mainTwo" name="mainTwo" value="{{menu.mainTwo}}" />
           </p>
 
           <p>
-            <wired-input type="text" name="mainThree" placeholder="3er plato fuerte" onchange="document.getElementById('mainThree').value = this.value"></wired-input>
-            <input type="hidden" id="mainThree" name="mainThree">
+            <wired-input type="text" name="mainThree" placeholder="3er plato fuerte" onchange="document.getElementById('mainThree').value = this.value" value="{{menu.mainThree}}"></wired-input>
+            <input type="hidden" id="mainThree" name="mainThree" value="{{menu.mainThree}}" />
           </p>
           
           <p>
-            <wired-button class="color-orange" onclick="document.forms[0].submit()">¡Agregar!</wired-button>
+            <input type="hidden" name="menu" value="{{menu._id}}" />
+            <wired-button class="{{colorButton}}" onclick="document.forms[0].submit()">{{button}}</wired-button>
           </p>
         </form>
       </div>
