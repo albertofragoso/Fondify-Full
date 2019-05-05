@@ -8,7 +8,7 @@ const { isLogged, checkRole } = require('../helpers/middlewares')
 router.get('/', isLogged, checkRole('fonda'), (req, res, next) => {
   Fonda.findOne({ user: req.user._id })
     .then(fonda => {
-      Order.find({ fonda: fonda._id}).populate('user').populate('menuUser')
+      Order.find({ fonda: fonda._id}).sort({ arrive: 1 }).populate('user').populate('menuUser')
         .then(orders => {
           res.render('fondas/fonda', { orders })
         })
