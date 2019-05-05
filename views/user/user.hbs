@@ -2,29 +2,47 @@
   <div class="section">
     <div class="row">
       <div class="col s12 m12">
-        <h5>Bienvenido: "{{name}}"</h5>
+        <h3 >¡Bienvenido, {{loggedUser.name}}! 😎</h3>
+        {{#if orders}}
+        <h5 class="grey-text">Estas son tus reservaciones de hoy: </h5>
+      {{/if}}
       </div>
     </div>
     <div class="row">
-      {{#unless menus}}
+      {{#unless orders}}
       <div class="col s12 m12">
         <h5 class="deep-orange-text accent-3">No has reservado en alguna fonda hoy.</h5>
       </div>  
       {{/unless}}
-      {{#each menus as |menu|}}
+      {{#each orders as |order|}}
       <div class="col s12 m4">
-
-        <div class="card">
+        <div class="card z-depth-3">
           <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="images/office.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-            <p><a href="#">This is a link</a></p>
+            <a href="/fondas/{{order.fonda._id}}"><img class="activator" src="{{order.fonda.picPath}}"></a>
           </div>
           <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
+            <span class="card-title grey-text text-darken-4">Tus ordenes: <i class="material-icons right">close</i></span>
+            {{#each order.menuUser as |menu|}}
+            <h6>Persona {{@index}}</h6>
+            <p><span class="grey-text">Primer tiempo:</span> {{menu.firstTime}}</p>
+            <p><span class="grey-text">Segundo tiempo:</span> {{menu.secondTime}}</p>
+            <p><span class="grey-text">Plato fuerte:</span> {{menu.main}}</p>
+            <form action="/user/remove-menu" method="POST">
+              <input type="hidden" name="order" value="{{order._id}}">
+              <input type="hidden" name="menu" value="{{menu._id}}">
+              <wired-button class="red accent-4 white-text" onclick="document.forms[{{@index}}].submit()">Eliminar</wired-button>
+            </form>
+            <hr>
+            {{/each}}
+          </div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">{{order.fonda.name}}<i class="material-icons right">more_vert</i></span>
+            <p><span class="grey-text">Hora de reservación:</span> {{order.arrive}}</p>
+            <br>
+            <wired-button onclick="location.href='/fondas/{{order.fonda._id}}'" class="yellow accent-4 white-text">Editar</wired-button>
+
+            <wired-button style="margin-left: 1em;" class="red accent-4 white-text" onclick="location.href='/user/reservation/{{order._id}}/delete'">Eliminar</wired-button>
+
           </div>
         </div>
       {{/each}}

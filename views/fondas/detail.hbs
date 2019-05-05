@@ -9,14 +9,14 @@
       <div class="col s12 m5">
         <h4>{{fonda.name}}</h4>
         <img src="{{fonda.picPath}}" alt="{{fonda.name}}" class="responsive-img">    
-        <p>{{fonda.description}}</p>
+        <p class="grey-text">{{fonda.description}}</p>
         <p>{{fonda.phoneNumber}}</p>
         <small>{{fonda.rank}}</small>
         <div id="map" style="width: 100%; height: 200px"></div>
         <br><br>
       </div>
       <div class="col s12 m7">
-        <h4>Nuestro menú de hoy: {{createdAt}}</h4>
+        <h5 class="grey-text">Nuestro menú de hoy: {{createdAt}}</h5>
         <div class="card-grid">
           <wired-card elevation="3">
             <form action="reservation" method="POST">
@@ -59,8 +59,9 @@
             </form>
           </wired-card>
       </div>
+      <br>
       <form action="more" method="POST">
-        <p>Aquí puedes añadir más acompañates a tu orden: </p>
+        <p class="grey-text">Aquí puedes añadir más acompañates a tu orden: </p>
         <wired-input type="text" name="text" placeholder="Cuántos más" onchange="document.getElementById('howManyMore').value = this.value"></wired-input>
         <input type="hidden" name="howManyMore" id="howManyMore">
         <input type="hidden" name="order", value={{order._id}}>
@@ -76,9 +77,9 @@
   <div class="modal-content">
     <form action="new-order" method="POST">
       <h4>¿Cuántas personas y a qué hora vienen a comer?</h4>
-      <wired-input type="text" placeholder="Cuántas" name="howMany" onchange="document.getElementById('howMany').value = this.value"></wired-input>
+      <wired-input style="border: 1px solid grey" type="text" placeholder="Cuántas" name="howMany" onchange="document.getElementById('howMany').value = this.value"></wired-input>
       <input type="hidden" id="howMany" name="howMany">
-      <wired-input type="time" placeholder="A qué hora" name="howMany" onchange="document.getElementById('arrive').value = this.value"></wired-input>
+      <wired-input style="border: 1px solid grey" type="time" placeholder="A qué hora" name="howMany" onchange="document.getElementById('arrive').value = this.value"></wired-input>
       <input type="hidden" id="arrive" name="arrive">
       <input type="hidden" id="fonda" name="fonda" value={{fonda._id}}>
       <wired-button class="color-orange" onclick="document.forms[2].submit()">¡Ordenemos!</wired-button>
@@ -98,7 +99,15 @@
 <!--Modal-->
 <div id="modal1" class="modal bottom-sheet">
   <div class="modal-content">
-    <h4>Has ordenado con éxito hoy en esta fonda. Checa tu pedido <a href="/user">aquí</a>.</h4>
+    <h5>
+      Ya has ordenado hoy. Checa tu pedido <a href="/user">aquí</a>. Ó añade más acompañates a tu orden:
+      <form action="more" method="POST" style="display:inline-block">
+        <wired-input style="border: 1px solid grey" type="number" name="text" onchange="document.getElementById('howManyMore2').value = this.value"></wired-input>
+        <input type="hidden" name="howManyMore" id="howManyMore2">
+        <input type="hidden" name="order", value={{order._id}}>
+        <wired-button onclick="document.forms[2].submit()" class="yellow">Añadir</wired-button>
+      </form>
+    </h5>
   </div>
 </div>
 <script>
