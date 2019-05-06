@@ -2,7 +2,7 @@
 
 ![Fondify](https://res.cloudinary.com/dqqtlpdt0/image/upload/v1557096068/fondify/fondify_um1y3n.png)
 
-La forma más facil de conectar con la cocina local de tu área.
+La forma más fácil de conectar con la cocina local de tu área.
 
 ## How to use it
 
