@@ -27,7 +27,7 @@ function styleEmail(username, confirmationCode) {
   <img src="https://res.cloudinary.com/dqqtlpdt0/image/upload/v1557096068/fondify/fondify_um1y3n.png" alt="Fondify"/>
   <h1>Hola, ${username}.</h1>
   <h2>Gracias por unirte a Fondify.</h2>
-  <p>Por favor confirma tu cuenta haciendo click <a href="http://localhost:3000/confirm/${confirmationCode}">aquí</a>.</p>
+  <p>Por favor confirma tu cuenta haciendo click <a href="https://floating-crag-94921.herokuapp.com/confirm/${confirmationCode}">aquí</a>.</p>
   <p>Y comienza a buscar la comida más rica de nuestras fondas mexicanas. 🍽</p>
   <small>Made with 🧡 at Ironhack</small>
   </body>
