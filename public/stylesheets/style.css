@@ -24,4 +24,9 @@ footer {
 wired-card {
   padding-left: 2em; }
 
+.fondify {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
 /*# sourceMappingURL=style.css.map */
