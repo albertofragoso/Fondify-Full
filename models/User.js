@@ -14,6 +14,15 @@ const userSchema = new Schema({
     enum: ['admin', 'user', 'fonda'],
     default: 'user',
     required: true
+  },
+  confirmationCode: {
+    type: String,
+    unique: true
+  },
+  status: {
+    type: String,
+    enum: ['Pending Confirmation', 'Active'],
+    default: 'Pending Confirmation'
   }
 }, 
 {

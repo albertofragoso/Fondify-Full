@@ -3,7 +3,7 @@ const Menu = require('../models/Menu')
 const Fonda = require('../models/Fonda')
 const Order = require('../models/Order')
 const MenuUser = require('../models/MenuUser')
-const { isLogged, checkRole } = require('../helpers/middlewares')
+const { isLogged, checkRole, isActive } = require('../helpers/middlewares')
 const moment = require('moment')
 
 router.post('/', (req, res, next) => {
@@ -20,7 +20,7 @@ router.post('/', (req, res, next) => {
     .catch(err => next(err))
 })
 
-router.post('/new-order', isLogged, (req, res, next) => {
+router.post('/new-order', isLogged, isActive, (req, res, next) => {
   const { fonda, howMany, arrive } = req.body
   if(!fonda || !howMany || !arrive) return res.redirect(`/fondas/${fonda}`)
   Order.create({ fonda, howMany, arrive, user: req.user._id })
@@ -28,7 +28,7 @@ router.post('/new-order', isLogged, (req, res, next) => {
     .catch(err => next(err))
 })
 
-router.post('/reservation', isLogged, (req, res, next) => {
+router.post('/reservation', isLogged, isActive, (req, res, next) => {
   const { fonda, order, firstTime, secondTime, main } = req.body
 
   MenuUser.create({ firstTime, secondTime, main })
@@ -40,7 +40,7 @@ router.post('/reservation', isLogged, (req, res, next) => {
     .catch(err => next(err))
 })
 
-router.post('/more', isLogged, (req, res, next) => {
+router.post('/more', isLogged, isActive, (req, res, next) => {
   const { howManyMore, order } =  req.body
   if(!howManyMore || !order) return
   Order.findByIdAndUpdate(order, { $inc : {'howMany' : howManyMore }}, { new: true })
@@ -48,7 +48,7 @@ router.post('/more', isLogged, (req, res, next) => {
     .catch(err => next(err))
 })
 
-router.get('/:id', isLogged, async (req, res, next) => {
+router.get('/:id', isLogged, isActive, async (req, res, next) => {
   const { id } = req.params
 
   let order = await Order.findOne({ user: req.user.id, fonda: id })

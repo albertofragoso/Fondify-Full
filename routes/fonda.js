@@ -33,7 +33,14 @@ router.post('/new-menu', isLogged, checkRole('fonda'),(req, res , next) => {
   Fonda.findOne({ user: req.user._id })
     .then(fonda => {
       Menu.create({ ...req.body, fonda: fonda._id })
-        .then(() => res.render('fondas/new_menu', { message: '¡Está listo tu menú de hoy!' }))
+        .then(() => {
+          const config = {
+            button: '¡Agregar!',
+            colorButton: 'color-orange',
+            action: '/fonda/new-menu'
+          }
+          res.render('fondas/new_menu', { config, message: '¡Está listo tu menú de hoy!' })
+        })
         .catch(err => next(err))
     })
     .catch(err => next(err))

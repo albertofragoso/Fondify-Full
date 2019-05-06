@@ -2,6 +2,8 @@ const router       = require('express').Router()
 const passport     = require('../helpers/passport')
 const User         = require('../models/User')
 const { isLogged } = require('../helpers/middlewares')
+const { createToken } = require('../helpers/token')
+const { sendEmail } = require('../helpers/nodemailer')
 
 router.get('/signup', (req, res, next) => {
   const config = {
@@ -25,7 +27,18 @@ router.post('/signup', (req, res, next) => {
     sign: true
   })
 
-  User.register({ ...req.body }, req.body.password)
+  User.findOne({ email }, 'email', (err, user) => {
+    if(user !== null) return res.render('auth/signup', 
+    {
+      err: 'Este usuario ya existe.', 
+      title: 'Sign up',
+      action: '/signup',
+      submit: '¡Registrate!',
+      sign: true
+    })
+  })
+
+  User.register({ ...req.body, confirmationCode: createToken() }, req.body.password)
     .then(user => {
       passport.authenticate('local', (err, user, info) => {
         if(err) return next(err)
@@ -33,7 +46,9 @@ router.post('/signup', (req, res, next) => {
         req.logIn(user, err => {
           if(err) return next(err)
           req.app.locals.loggedUser = user
-          res.redirect('/')
+          sendEmail(user.name, user.email, user.confirmationCode)
+            .then(() => res.render('index', { message: '¡Listo! Ahora confirma tu cuenta en tu correo electrónico.' }))
+            .catch(err => next(err))
         })
       })(req, res, next)
     })
@@ -78,6 +93,13 @@ router.get('/logout', (req, res, next) => {
 router.get('/profile', isLogged, (req, res, next) => {
   User.findById(req.app.locals.loggedUser._id)
     .then(user => res.render('profile', user))
+    .catch(err => next(err))
+})
+
+router.get('/confirm/:confirmCode', (req, res, next) => {
+  const { confirmCode } = req.params
+  User.findOneAndUpdate({ confirmationCode: confirmCode }, { status: 'Active' })
+    .then(user => res.render('auth/confirmation.hbs', user))
     .catch(err => next(err))
 })
 

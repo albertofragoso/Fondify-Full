@@ -1,8 +1,14 @@
 <div class="section no-pad-bot grey lighten-3">
   <div class="container">
     <br><br>
-    <h1 class="header center black-text">{{title}} <img src="images/805201_food.svg" alt="Fondify" width="80" /></h1>
+    <h1 class="header center black-text">{{title}} <img src="/images/805201_food.svg" alt="Fondify" width="80" /></h1>
     <div class="row center">
+      {{#if message}}
+      <p class="green-text">{{message}}</p>
+      {{/if}}
+      {{#if err}}
+      <p class="red-text">{{err}}</p>
+      {{/if}}
       <form action="/fondas" method="POST">
         <wired-input type="text" name="main" placeholder="Tienes antojo de..." onchange="document.getElementById('main').value = this.value"></wired-input>
         <input type="hidden" id="main" name="main">
